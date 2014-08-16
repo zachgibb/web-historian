@@ -1,4 +1,5 @@
 var fs = require('fs');
+var readline = require('readline');
 var path = require('path');
 var _ = require('underscore');
 
@@ -24,17 +25,36 @@ exports.initialize = function(pathsObj){
 
 // The following function names are provided to you to suggest how you might
 // modularize your code. Keep it clean!
+fs.appendFile(exports.paths.list, 'www.test.com\n', function (err) {
+  console.log(err);
+});
+var rd = readline.createInterface({
+    input: fs.createReadStream(exports.paths.list),
+    output: process.stdout,
+    terminal: false
+});
 
-exports.readListOfUrls = function(){
+rd.on('line', function(line) {
+    console.log(line);
+});
+
+exports.readListOfUrls = function(list){
+  fs.readFile(list, function (err, data) {
+    if (err) {
+      console.log(err);
+    }
+    var body = "";
+    body += data;
+    console.log(body);
+  });
+};
+exports.isUrlInList = function(url, list){
 };
 
-exports.isUrlInList = function(){
+exports.addUrlToList = function(url, list){
 };
 
-exports.addUrlToList = function(){
-};
-
-exports.isURLArchived = function(){
+exports.isURLArchived = function(url){
 };
 
 exports.downloadUrls = function(){
