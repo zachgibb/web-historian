@@ -46,19 +46,23 @@ exports.desires = function(extension) {
   }
 };
 
-exports.serveAssets = function(res, asset, callback) {
+exports.serveAssets = function(res, asset) {
   var fileType = path.extname(asset);
+
+  // if file type is not in the list of valid extensions, set response to html
   if (!validExtensions[fileType]) {
     fileType = '.html';
   }
-  console.log('file located: ' + asset);
 
+  // read file at the place specified by 'asset'
   fs.readFile(asset, function (err, data) {
 
+    // if can't read file
     if (err) {
-      console.log('couldn\'t read file');
-      reqHandler.sendResponse(res, "UNKNOWN ERROR: " + err, 500, {'Content-Type': validExtensions[fileType]});
+      // tell them i don't know what happened
+      reqHandler.sendResponse(res, "404 NOT FOUND, or 500 INTERNAL SERVER ERROR" + err, 404, {'Content-Type': validExtensions[fileType]});
     } else {
+      // send them the data
       reqHandler.sendResponse(res, data, 200, {'Content-Type': validExtensions[fileType]});
     }
 

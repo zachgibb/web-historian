@@ -5,6 +5,7 @@
   "author": "Hack Reactor",
   "license": "Copyright 2013, Hack Reactor. All rights reserved.",
   "dependencies": {
+    "http-request": "^0.6.3",
     "underscore": "^1.6.0"
   },
   "devDependencies": {
